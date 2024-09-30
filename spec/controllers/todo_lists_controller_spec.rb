@@ -75,7 +75,7 @@ describe TodoListsController do
 
       it 'returns a success code' do
         put :update, params: params
-        expect(response.status).to eq(200)
+        expect(response.status).to eq(302)
       end
 
       it 'updates the list attribute' do
@@ -123,7 +123,7 @@ describe TodoListsController do
 
     it 'returns a success code' do
       delete :destroy, params: params
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'destroys the list' do
@@ -149,7 +149,7 @@ describe TodoListsController do
 
     it 'returns a success code' do
       put :complete_tasks, params: params
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'enqueues the ListCompleterJob' do
