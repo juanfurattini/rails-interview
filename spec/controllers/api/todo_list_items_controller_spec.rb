@@ -160,30 +160,59 @@ describe Api::TodoListItemsController do
   describe 'PUT complete_task' do
     include ActiveJob::TestHelper
 
-    before do
-      travel_to current
-    end
-
-    after do
-      travel_back
-    end
-
     let!(:todo_list) { TodoList.create(name: 'Setup RoR project') }
 
     let(:params) { { todo_list_id: todo_list.id, todo_list_item_id: todo_list_item_2.id } }
 
     let(:current) { Time.current }
 
-    it 'returns a success code' do
-      put :complete_task, params: params
-      expect(response.status).to eq(200)
+    context 'when item is pending' do
+      before do
+        travel_to current
+      end
+
+      after do
+        travel_back
+      end
+
+      it 'returns a success code' do
+        put :complete_task, params: params
+        expect(response.status).to eq(200)
+      end
+
+      it 'mark the task as completed' do
+        expect do
+          put :complete_task, params: params
+          todo_list_item_2.reload
+        end.to change(todo_list_item_2, :completed_at).from(nil).to be_within(1.second).of current
+      end
     end
 
-    it 'mark the task as completed' do
-      expect do
-        put :complete_task, params: params
+    context 'when item is already completed' do
+      before do
+        todo_list_item_2.complete!
         todo_list_item_2.reload
-      end.to change(todo_list_item_2, :completed_at).from(nil).to be_within(1.second).of current
+      end
+
+      it 'returns an error code' do
+        put :complete_task, params: params
+        expect(response.status).to eq(422)
+      end
+
+      it 'the list item attribute keeps the same' do
+        expect do
+          put :complete_task, params: params
+          todo_list_item_2.reload
+        end.not_to change(todo_list_item_2, :completed_at)
+      end
+
+      it 'returns the errors' do
+        put :complete_task, params: params
+
+        json_response = JSON.parse(response.body)
+
+        expect(json_response['completed_at']).to match_array ["The task is already completed"]
+      end
     end
   end
 end

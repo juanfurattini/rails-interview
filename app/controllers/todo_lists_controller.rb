@@ -34,9 +34,8 @@ class TodoListsController < ApplicationController
 
   # PUT /api/todolist/:id
   def update
-    byebug
     @todo_list.assign_attributes(update_params[:todo_list])
-    byebug
+
     if @todo_list.save
       redirect_to @todo_list, notice: 'List was successfully updated.'
     else
