@@ -1,0 +1,23 @@
+<%= form_for [@todo_list, @todo_list_item] do |form| %>
+  <% if todo_list_item.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(todo_list_item.errors.count, "error") %> prohibited this todo_list_item from being saved:</h2>
+
+      <ul>
+        <% todo_list_item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-row padding-bottom">
+    <%= form.label :description, style: "padding-right: 20px;" %>
+    <%= form.text_field :description %>
+    <%= form.hidden_field :todo_list_id, value: @todo_list.id %>
+  </div>
+
+  <div class="padding-top">
+    <%= form.submit %>
+  </div>
+<% end %>

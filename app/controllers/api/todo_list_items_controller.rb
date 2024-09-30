@@ -21,7 +21,7 @@ module Api
       end
     end
 
-    # PUT /api/todolist/:id
+    # PUT /api/todolist/:todo_list_id/todos/:id
     def update
       @todo_list_item.assign_attributes(update_params)
 
@@ -32,7 +32,7 @@ module Api
       end
     end
 
-    # DELETE /api/todolists/:todo_list_id/todos
+    # DELETE /api/todolist/:todo_list_id/todos/:id
     def destroy
       if @todo_list_item.destroy
         head :ok

@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @todo_list_item %>
+
+<div class="padding-bottom">
+  <%= link_to "Edit this todo list item", edit_todo_list_todo_list_item_path(id: @todo_list_item.id) %> |
+  <%= link_to "Back to todo list items", todo_list_todo_list_items_path(@todo_list) %>
+</div>
+
+<% unless @todo_list_item.completed? %>
+  <div class="padding-top">
+    <%= button_to "Complete this todo list item", todo_list_todo_list_item_complete_task_path(todo_list_item_id: @todo_list_item.id), method: :put %>
+  </div>
+<% end %>
+
+<div class="padding-top">
+  <%= button_to "Destroy this todo list item", todo_list_todo_list_item_path(@todo_list, @todo_list_item), method: :delete %>
+</div>

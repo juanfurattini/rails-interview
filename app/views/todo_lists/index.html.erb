@@ -1,9 +1,30 @@
-<%= link_to 'Add Todo List', new_todo_list_path %>
+<p style="color: green"><%= notice %></p>
 
-<div>
-  <% @todo_lists.each do |todo_list| %>
-    <div>
-      #<%= todo_list.id %> | <%= todo_list.name %>
-    </div>
-  <% end %>
-</div>
+<h1 class="center">Todo lists</h1>
+
+<table id="todo_lists" width="auto">
+  <caption>
+    <%= link_to "New todo list", new_todo_list_path %>
+  </caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Completed?</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @todo_lists.each do |todo_list| %>
+      <tr>
+        <td><%= todo_list.name %></td>
+        <td class="center">
+          <%= check_box_tag "list_#{todo_list.id}", todo_list.completed?, todo_list.completed?, disabled: true %>
+        </td>
+        <td class="center">
+          <%= link_to "Show", todo_list %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

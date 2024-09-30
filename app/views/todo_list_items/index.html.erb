@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="center">Todo list items</h1>
+
+<table id="todo_list_items" width="auto">
+  <caption>
+    <%= link_to "New todo list item", new_todo_list_todo_list_item_path(@todo_list) %> |
+    <%= link_to "Back to todo lists", todo_lists_path %>
+  </caption>
+  <thead>
+  <tr>
+    <th>Description</th>
+    <th>Completed at</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @todo_list_items.each do |todo_list_item| %>
+    <tr>
+      <td><%= todo_list_item.description %></td>
+      <td class="right"><%= todo_list_item.completed_at %></td>
+      <td class="center">
+        <%= link_to "Show", todo_list_todo_list_item_path(id: todo_list_item.id) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
