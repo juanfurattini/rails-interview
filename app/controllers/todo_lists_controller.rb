@@ -26,9 +26,9 @@ class TodoListsController < ApplicationController
     @todo_list = TodoList.new(create_params[:todo_list])
 
     if @todo_list.save
-      redirect_to @todo_list, notice: 'List was successfully created.'
+      redirect_to @todo_list, status: :created, notice: 'List was successfully created.'
     else
-      render action: 'new'
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -37,18 +37,18 @@ class TodoListsController < ApplicationController
     @todo_list.assign_attributes(update_params[:todo_list])
 
     if @todo_list.save
-      redirect_to @todo_list, notice: 'List was successfully updated.'
+      redirect_to @todo_list, status: :ok, notice: 'List was successfully updated.'
     else
-      render action: 'edit'
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 
   # DELETE /api/todolists
   def destroy
     if @todo_list.destroy
-      redirect_to action: 'index', notice: 'List was successfully deleted.'
+      redirect_to action: 'index', status: :ok, notice: 'List was successfully deleted.'
     else
-      redirect_to :back
+      render action: 'show', status: :unprocessable_entity
     end
   end
 
@@ -56,7 +56,7 @@ class TodoListsController < ApplicationController
   def complete_tasks
     ListCompleterJob.perform_later(params[:todo_list_id])
 
-    redirect_to action: 'index', notice: 'List was enqueued to complete the tasks.'
+    redirect_to action: 'index', status: :ok, notice: 'List was enqueued to complete the tasks.'
   end
 
   private

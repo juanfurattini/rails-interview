@@ -4,12 +4,6 @@ class TodoList < ApplicationRecord
   validates :name, presence: true
 
   def complete!
-    # if completed?
-    #   errors.add(:base, 'All the tasks are already completed')
-    #
-    #   return false
-    # end
-
     todo_list_items.pending.map(&:complete!)
   end
 

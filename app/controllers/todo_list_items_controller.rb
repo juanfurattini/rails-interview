@@ -29,9 +29,9 @@ class TodoListItemsController < ApplicationController
     @todo_list_item = TodoListItem.new(create_params[:todo_list_item])
 
     if @todo_list_item.save
-      redirect_to [@todo_list, @todo_list_item], notice: 'List was successfully created.'
+      redirect_to [@todo_list, @todo_list_item], status: :created, notice: 'List was successfully created.'
     else
-      render action: 'new'
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -40,18 +40,18 @@ class TodoListItemsController < ApplicationController
     @todo_list_item.assign_attributes(update_params[:todo_list_item])
 
     if @todo_list_item.save
-      redirect_to [@todo_list, @todo_list_item], notice: 'List item was successfully updated.'
+      redirect_to [@todo_list, @todo_list_item], status: :ok, notice: 'List item was successfully updated.'
     else
-      render action: 'edit'
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 
   # DELETE /todolist/:todo_list_id/todos/:id
   def destroy
     if @todo_list_item.destroy
-      redirect_to action: 'index', notice: 'List item was successfully deleted.'
+      redirect_to action: 'index', status: :ok, notice: 'List item was successfully deleted.'
     else
-      redirect_to :back
+      render action: 'show', status: :unprocessable_entity
     end
   end
 
@@ -59,9 +59,9 @@ class TodoListItemsController < ApplicationController
   def complete_task
     @todo_list_item = @todo_list.todo_list_items.find(params[:todo_list_item_id])
     if @todo_list_item.complete!
-      redirect_to action: 'index', notice: 'List item was successfully marked as completed.'
+      redirect_to action: 'index', status: :ok, notice: 'List item was successfully marked as completed.'
     else
-      redirect_to :back
+      render action: 'show', status: :unprocessable_entity
     end
   end
 
