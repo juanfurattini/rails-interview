@@ -3,9 +3,7 @@
 <%= render @todo_list %>
 
 <div class="padding-bottom">
-  <% if @todo_list.todo_list_items.any? %>
-    <%= link_to "View items", todo_list_todo_list_items_path(@todo_list) %> |
-  <% end %>
+  <%= link_to "View items", todo_list_todo_list_items_path(@todo_list) %> |
   <%= link_to "Edit this todo list", edit_todo_list_path(@todo_list) %> |
   <%= link_to "Back to todo lists", todo_lists_path %>
 </div>
