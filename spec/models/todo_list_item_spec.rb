@@ -9,7 +9,7 @@ RSpec.describe TodoListItem, type: :model do
   end
   let!(:todo_list_item) { todo_list.todo_list_items.last }
 
-  describe 'scopres' do
+  describe 'scopes' do
     before { todo_list_item.complete! }
 
     describe 'pending' do
