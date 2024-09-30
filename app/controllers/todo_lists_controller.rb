@@ -66,10 +66,10 @@ class TodoListsController < ApplicationController
   end
 
   def create_params
-    params.permit todo_list: [:name, :commit]
+    params.permit :authenticity_token, :commit, :_method, :id, todo_list: [:name, :commit]
   end
 
   def update_params
-    params.permit todo_list: [:name, :commit]
+    params.permit :authenticity_token, :commit, :_method, :id, todo_list: [:name, :commit]
   end
 end
