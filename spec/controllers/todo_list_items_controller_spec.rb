@@ -141,13 +141,9 @@ describe TodoListItemsController do
     let(:current) { Time.current }
 
     context 'when item is pending' do
-      before do
-        travel_to current
-      end
+      before { travel_to current }
 
-      after do
-        travel_back
-      end
+      after { travel_back }
 
       it 'returns a success code' do
         put :complete_task, params: params
